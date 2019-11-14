@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class Nav extends Component {
   render() {
     return (
-      <div>
+      <React.Fragment>
         <h1>LED WEAR</h1>
         <nav>
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -30,7 +30,7 @@ class Nav extends Component {
             </a>
           </div>
         </nav>
-      </div>
+      </React.Fragment>
     );
   }
 }
