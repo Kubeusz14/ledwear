@@ -1,0 +1,17 @@
+@import "assets/variables.scss";
+
+html,
+body {
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    $primary-color 0%,
+    $secondary-color 25%,
+    $radial-color1 50%,
+    $radial-color3 75%,
+    $radial-color2 100%
+  );
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}

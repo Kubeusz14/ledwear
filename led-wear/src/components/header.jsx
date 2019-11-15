@@ -1,38 +1,41 @@
 import React, { Component } from "react";
+import Nav from "react-bootstrap/Nav";
 
-class Nav extends Component {
+class Header extends Component {
   render() {
     return (
       <React.Fragment>
         <h1>LED WEAR</h1>
-        <nav>
-          <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <a
-              class="nav-item nav-link active"
+        <Nav variant="tabs" activeKey="/post-tab" role="tablist" id="nav-tab">
+          <Nav.Item role="navigation">
+            <Nav.Link
+              className="nav-item nav-link"
               id="nav-post-tab"
               data-toggle="tab"
-              href="#nav-post"
+              href="/post-tab"
               role="tab"
               aria-controls="nav-post"
               aria-selected="true"
             >
               Post
-            </a>
-            <a
-              class="nav-item nav-link"
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item role="navigation">
+            <Nav.Link
+              className="nav-item nav-link"
               id="nav-animation-tab"
               data-toggle="tab"
-              href="#nav-animation"
+              href="/animation-tab"
               role="tab"
               aria-controls="nav-animation"
             >
               Animation
-            </a>
-          </div>
-        </nav>
+            </Nav.Link>
+          </Nav.Item>
+        </Nav>
       </React.Fragment>
     );
   }
 }
 
-export default Nav;
+export default Header;
