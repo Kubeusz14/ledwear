@@ -1,11 +1,9 @@
 .shirt{
     &__figure {
   text-align: center;
-}
-
-    &__image {
-  width: 70%;
-  height: 70%;
+  background-image: url(../assets/images/shirt.jpg);
+  width: 50rem;
+  height: 40rem;
   margin: 2rem;
 
   clip-path: polygon(
