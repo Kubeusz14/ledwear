@@ -1,8 +1,9 @@
-.shirt__figure {
+.shirt{
+    &__figure {
   text-align: center;
 }
 
-.shirt__image {
+    &__image {
   width: 70%;
   height: 70%;
   margin: 2rem;
@@ -26,4 +27,8 @@
     50% 15%,
     35% 0
   );
+}
+    &__settings {
+        text-align: right;
+    }
 }
