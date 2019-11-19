@@ -1,32 +1,37 @@
-.shirt{
-    &__figure {
-  text-align: center;
-  background-image: url(../assets/images/shirt.jpg);
-  width: 50rem;
-  height: 40rem;
-  margin: 2rem;
-
-  clip-path: polygon(
-    18% 0,
-    0 33%,
-    0 95%,
-    13% 95%,
-    15% 37%,
-    27% 22%,
-    27% 100%,
-    73% 100%,
-    73% 23%,
-    85% 37%,
-    87% 95%,
-    100% 95%,
-    100% 33%,
-    82% 0,
-    65% 0,
-    50% 15%,
-    35% 0
-  );
+.shirt {
+  &__figure {
+    text-align: center;
+    background-image: url(../assets/images/shirt.png);
+    width: 50rem;
+    height: 40rem;
+    margin: 2rem;
+  }
+  &__settings {
+    text-align: right;
+  }
 }
-    &__settings {
-        text-align: right;
-    }
+
+.row {
+  margin-bottom: 8rem;
+  margin-top: 2rem;
+}
+
+#right-col {
+  text-align: -webkit-right;
+}
+
+#left-col {
+  text-align: -webkit-left;
+}
+
+#center-col {
+  text-align: -webkit-center;
+}
+
+#nav-container-tabpane-post-tab {
+  text-align: -webkit-center;
+}
+
+.form-control {
+  width: 40%;
 }
