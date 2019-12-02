@@ -1,37 +1,11 @@
 .shirt {
   &__figure {
-    text-align: center;
-    background-image: url(../assets/images/shirt.png);
-    width: 50rem;
-    height: 40rem;
-    margin: 2rem;
+    height: 500vh;
+    width: 500vh;
+    position: relative;
+    background-repeat: no-repeat;
+    & input {
+      position: absolute;
+    }
   }
-  &__settings {
-    text-align: right;
-  }
-}
-
-.row {
-  margin-bottom: 8rem;
-  margin-top: 2rem;
-}
-
-#right-col {
-  text-align: -webkit-right;
-}
-
-#left-col {
-  text-align: -webkit-left;
-}
-
-#center-col {
-  text-align: -webkit-center;
-}
-
-#nav-container-tabpane-post-tab {
-  text-align: -webkit-center;
-}
-
-.form-control {
-  width: 40%;
 }

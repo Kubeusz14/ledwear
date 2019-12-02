@@ -6,9 +6,5 @@ import App from './App';
 import * as registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(<App />, document.getElementById('root'));
-/*ReactDOM.render(, document.getElementById('main'));
-ReactDOM.render(, document.getElementById('settings'));
-ReactDOM.render(, document.getElementById('footer'));
-*/
 
 registerServiceWorker.unregister();
