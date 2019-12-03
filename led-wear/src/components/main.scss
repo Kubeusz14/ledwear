@@ -1,0 +1,11 @@
+.shirt {
+  &__figure {
+    height: 500vh;
+    width: 500vh;
+    position: relative;
+    background-repeat: no-repeat;
+    & input {
+      position: absolute;
+    }
+  }
+}
