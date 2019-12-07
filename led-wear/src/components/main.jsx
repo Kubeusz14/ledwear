@@ -79,22 +79,6 @@ const positions = [
   }
 ];
 
-function init() {
-  const shirt = document.getElementById("shirt");
-  const colorPickers = positions.map(position => {
-    console.log(position);
-    const colorPicker = document.createElement("input");
-    colorPicker.type = "color";
-    // colorPicker.addEventListener('change', ...)
-    // ...
-    colorPicker.style.left = position.x * 100 + "%";
-    colorPicker.style.top = `${position.y * 100}%`;
-    colorPicker.name = `${position.description}`;
-    shirt.appendChild(colorPicker);
-    return colorPicker;
-  });
-  console.log("COLOR PICKERS:", colorPickers);
-}
 
 /*function init() {
   const shirt = document.getElementById("shirt");
@@ -114,15 +98,39 @@ function init() {
 }*/
 
 class Main extends Component {
+  constructor(props) {
+    super(props);
+    this.shirt = React.createRef();
+    this.init = this.init.bind(this);
+  }
+
+  init() {
+    let shirt = document.getElementById("shirt");
+    let colorPickers = positions.map(position => {
+      console.log(position);
+      let colorPicker = document.createElement("input");
+      colorPicker.type = "color";
+      // colorPicker.addEventListener('change', ...)
+      // ...
+      colorPicker.style.left = position.x * 100 + "%";
+      colorPicker.style.top = `${position.y * 100}%`;
+      colorPicker.name = `${position.description}`;
+      shirt.appendChild(colorPicker);
+      return colorPicker;
+    });
+    console.log("COLOR PICKERS:", colorPickers);
+  }
+
   render() {
     return (
       <React.Fragment>
-        <div className="shirt__figure" id="shirt" style={ backgroundImage }></div>
+        <div className="shirt__figure" id="shirt" style={ backgroundImage } ref={this.init} />
       </React.Fragment>
+
     );
   }
 }
 
 export default Main;
 
-init();
+
