@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
+import "./settings.scss";
 
 function Settings(){
  const [show, setShow] = useState(false);
@@ -8,7 +9,7 @@ function Settings(){
  
         return ( 
             <>
-                <Button variant="primary" onClick={handleShow}>Settings</Button>
+                <Button className="settingsButton" variant="primary" onClick={handleShow}>Settings</Button>
                 <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Settings</Modal.Title>

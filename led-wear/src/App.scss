@@ -1,8 +1,35 @@
 @import "./assets/variables.scss";
 
+.row {
+  margin: 0;
+}
+
+.header {
+  padding: 1rem;
+  background-color: $primary-color;
+}
+
+.nav-tabs {
+  font-size: 1.4rem;
+}
+
 .nav-tab {
-    padding: 2rem;
-    background-color: $primary-color;
-    color: white;
-    
+  text-align: start;
+  color: white;
+  margin-right: 2rem;
+  margin-left: 2rem;
+  &:hover {
+    color: $hover-color;
+  }
+}
+
+.title {
+  border-bottom: $border-color;
+  text-align: center;
+  color: white;
+}
+
+.settings {
+  border-bottom: $border-color;
+  text-align: end;
 }

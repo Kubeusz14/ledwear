@@ -9,72 +9,72 @@ let backgroundImage = {
 const positions = [
   {
     name: "Cuff: Left",
-    x: 0.1,
+    x: 0.23,
     y: 0.8
   },
   {
     name: "Sleeve: Left",
-    x: 0.1,
+    x: 0.25,
     y: 0.5
   },
   {
     name: "Armhole: Left",
-    x: 0.2,
-    y: 0.3
+    x: 0.3,
+    y: 0.2
   },
   {
     name: "Collar: Left",
-    x: 0.4,
-    y: 0.3
+    x: 0.44,
+    y: 0.1
   },
   {
     name: "Placket: Left",
     x: 0.4,
-    y: 0.4
+    y: 0.25
   },
   {
     name: "Body: Higher Left",
     x: 0.4,
-    y: 0.6
+    y: 0.4
   },
   {
     name: "Body: Lower Left",
     x: 0.4,
-    y: 0.8
-  },
-  {
-    name: "Body: Lower Right",
-    x: 0.6,
-    y: 0.8
-  },
-  {
-    name: "Body: Higher Right",
-    x: 0.6,
     y: 0.6
   },
   {
-    name: "Placket: Right",
-    x: 0.6,
+    name: "Body: Lower Right",
+    x: 0.58,
+    y: 0.6
+  },
+  {
+    name: "Body: Higher Right",
+    x: 0.58,
     y: 0.4
   },
   {
+    name: "Placket: Right",
+    x: 0.58,
+    y: 0.25
+  },
+  {
     name: "Collar: Right",
-    x: 0.6,
-    y: 0.3
+    x: 0.54,
+    y: 0.1
   },
   {
     name: "Armhole: Right",
-    x: 0.8,
-    y: 0.3
+    x: 0.68,
+    y: 0.2
   },
   {
     name: "Sleeve: Right",
-    x: 0.9,
+    x: 0.72,
     y: 0.5
   },
   {
     name: "Cuff: Right",
-    x: 0.9,
+    x: 0.75,
     y: 0.8
   }
 ];

@@ -1,0 +1,12 @@
+@import "../assets/variables.scss"; 
+
+.settingsButton {
+    margin-right: 2rem;
+    background-color: white;
+    color: $primary-color;
+    border: $primary-color;
+}
+
+.btn-primary:hover {
+    background-color: $radial-color3;
+}

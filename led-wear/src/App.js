@@ -14,14 +14,14 @@ class App extends Component {
           <div>
             <header>
               <Row>
-                <Col>
+                <Col className="header nav-tabs">
                   <NavTab to="/main">Post</NavTab>
                   <NavTab to="/animation">Animation</NavTab>
                 </Col>
-                <Col>
+                <Col className="header title">
                   <h1>LED Wear</h1>
                 </Col>
-                <Col>
+                <Col className="header settings">
                   <Settings />
                 </Col>
               </Row>
@@ -29,7 +29,7 @@ class App extends Component {
             <main>
               <Switch>
                 <Route path="/main" component={Main} />
-                <Route path="/animation" component={Settings} />
+                <Route path="/animation" component={Main} />
               </Switch>
             </main>
           </div>
