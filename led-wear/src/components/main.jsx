@@ -144,7 +144,6 @@ class Main extends Component {
   init() {
     let shirt = document.getElementById("shirt");
     saveValue('ledColor', inputs.value);
-    enableForm();
     let colorPickers = positions.map(position => {
       console.log(position);
       let colorPicker = document.createElement("input");

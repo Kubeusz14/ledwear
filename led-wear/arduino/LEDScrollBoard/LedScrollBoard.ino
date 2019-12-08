@@ -284,62 +284,6 @@ void on_background() {
   pixelupdate=1;
 }
 
-void on_icon() {
-  if(server.hasArg("icon")) {
-    act_icon = server.arg("icon").toInt()-1;
-    if (act_icon<0) act_icon=0;
-    if (act_icon>=MAX_ICONS) act_icon=MAX_ICONS-1;
-  }
-  if(server.hasArg("anim")) {
-    icons[act_icon][ICON_PIXELS]= server.arg("anim").toInt();
-  }
-  if(server.hasArg("wait")) {
-    anim_wait = scale_wait(server.arg("wait").toInt());
-  }
-  if(server.hasArg("pixels")) {
-       load_iconPixels(act_icon);
-       preview_acticon=200;
-  }
-  if(server.hasArg("brightness")) {
-    icon_brightness = scale_brightness(server.arg("brightness").toInt());
-  }
-  server.send(200, "text/html", "{\"result\":1}");
-  pixelupdate=1;
-}
-
-void on_scroll() {
-  int iconpos=0;
-  if(server.hasArg("scrolltext")) {
-    scrolltext = server.arg("scrolltext");
-    scrolltext = " "+scrolltext;
-    // check for icon in scrolltext
-    while ((iconpos=scrolltext.indexOf('$',iconpos)) > -1)
-    {
-       uint8_t c =scrolltext[iconpos+1];
-       if ((c>='1') && (c<='9')) {
-          scrolltext[iconpos+1]= c-'0'+9;  // this will identify the icon number !
-          scrolltext.remove(iconpos,1);
-       } else iconpos++;
-    }
-    scrollindex = 0;
-  }
-  if(server.hasArg("wait")) {
-    scrollwait = scale_wait(server.arg("wait").toInt());
-  }
-  if(server.hasArg("color")) {
-    scrollcolor = strtol(server.arg("color").c_str(), NULL, 16);
-  }
-  if(server.hasArg("mode")) {
-    scroll_mode = server.arg("mode").toInt();
-  }
-  if(server.hasArg("brightness")) {
-    scroll_brightness = scale_brightness(server.arg("brightness").toInt());
-  }
-  server.sendHeader("Access-Control-Allow-Origin", "*");
-  server.send(200, "text/html", "{\"result\":1}");
-  pixelupdate=1;
-}
-
 void on_change_color() {
   uint16_t i;
   if(server.hasArg("pixels")) {
@@ -356,20 +300,6 @@ void on_change_color() {
 /* ----------------
  *  Helper functions 
  * ---------------- */
-
-
-void load_iconPixels(byte num) {
-  String val = server.arg("pixels");
-  for(uint16_t i=0;i<ICON_PIXELS;i++) {
-    // every pixel color is 6 bytes storing the hex value
-    // pixels are specified in row-major order
-    // here we need to flip it to column-major order to 
-    // match the physical connection of the leds
-    byte r=i/5, c=i%5;
-    if (!(c%2)) r=6-r;   // reverse every second column !
-    icons[num][c*7+r] = strtol(val.substring(i*6, i*6+6).c_str(), NULL, 16);
-  }
-}
 
 char dec2hex(byte dec) {
   if(dec<10) return '0'+dec;
