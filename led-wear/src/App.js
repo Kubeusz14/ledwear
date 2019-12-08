@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { NavTab } from "react-router-tabs";
 import Settings from "./components/settings";
 import Footer from "./components/footer";
+import Animation from "./components/animations";
 import { Row, Col } from "react-bootstrap";
 import "./App.scss";
 
@@ -30,7 +31,7 @@ class App extends Component {
             <main>
               <Switch>
                 <Route path="/main" component={Main} />
-                <Route path="/" component={Main} />
+                <Route path="/animation" component={Animation} />
               </Switch>
             </main>
           </div>

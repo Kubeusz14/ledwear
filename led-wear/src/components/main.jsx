@@ -12,25 +12,25 @@ let backgroundImage = {
 const positions = [
   {
     name: "Cuff: Right",
-    x: 0.33,
+    x: 0.36,
     y: 0.85,
     value: "#009900"
   },
   {
     name: "Sleeve: Right",
-    x: 0.35,
+    x: 0.37,
     y: 0.5,
     value: "#990099"
   },
   {
     name: "Armhole: Right",
-    x: 0.37,
+    x: 0.4,
     y: 0.2,
     value: "#909090"
   },
   {
     name: "Collar: Right",
-    x: 0.46,
+    x: 0.47,
     y: 0.1,
     value: "#099999"
   },
@@ -72,25 +72,25 @@ const positions = [
   },
   {
     name: "Collar: Left",
-    x: 0.53,
+    x: 0.52,
     y: 0.1,
     value: "#090999"
   },
   {
     name: "Armhole: Left",
-    x: 0.62,
+    x: 0.59,
     y: 0.2,
     value: "#990909"
   },
   {
     name: "Sleeve: Left",
-    x: 0.64,
+    x: 0.62,
     y: 0.5,
     value: "#999990"
   },
   {
     name: "Cuff: Left",
-    x: 0.66,
+    x: 0.628,
     y: 0.85,
     value: "#990009"
   }
