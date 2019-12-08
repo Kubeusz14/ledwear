@@ -1,3 +1,5 @@
+@import "../assets/variables.scss";
+
 #shirt {
   height: 100vh;
   position: relative;
@@ -6,5 +8,18 @@
   background-size: contain;
   & input {
     position: absolute;
+  }
+}
+
+.submit {
+  &__button {
+    background-color: white;
+    color: $primary-color;
+    border: $primary-color;
+    margin-bottom: 2rem;
+  }
+  &__div {
+    text-align: center;
+    padding-right: 0;
   }
 }

@@ -61,24 +61,8 @@ ESP8266WebServer server(80);  // create web server at HTTP port 80
 DNSServer        dnsServer;   // create the DNS object
 byte serve_dns_requests=1;    // shall we react (captive portal)
 
-byte bg_mode = BG_MODE_RAINBOW;
-byte bg_brightness = 30;
-uint16_t bg_wait = 20;
-uint32_t bg_color = 0x0000a0;
-
-String scrolltext = "       hello !  this is the open led billboard.    to post your message: connect to WiFi LedScrollBoard !      ";
-byte scrollindex = 0;
-byte scroll_mode=1;
-byte scroll_brightness = 200;
-uint16_t scrollwait = 40;
-uint32_t scrollcolor = 0xa0a000;
-
-uint32_t icons[MAX_ICONS][ICON_PIXELS+1] = { 0 }; // icon buffer. this holds up to 10 icons
-uint16_t anim_wait = 100;
-uint16_t icon_pos=0;
-uint16_t preview_acticon=0;
-byte act_icon=0,act_anim=0;
-byte icon_brightness = 200; 
+byte led_brightness = 30;
+uint32_t led_color = 0x0000a0;
 
 byte pixelupdate =1;
 byte brightness = 80;         // default overall brightness
@@ -91,16 +75,8 @@ String get_ap_name();
 void button_handler();
 void on_status();
 void on_change_color();
-void on_background();
-void on_scroll();
-void on_icon();
 void on_homepage();
 void show_leds();
-void background_rainbow();
-void update_background();
-void update_scrolltext();
-void update_icons();
-void load_iconPixels(byte);
 uint32_t adjust_brightness(uint32_t, byte);
 
 uint32_t counter=0;
@@ -136,9 +112,7 @@ void setup() {
   server.on("/",   on_homepage);    
   server.on("/js", on_status);
   server.on("/cc", on_change_color);
-  server.on("/bg", on_background);
-  server.on("/ic", on_icon);
-  server.on("/sc", on_scroll);
+  
   //server.onNotFound(on_homepage);
   server.onNotFound([](){               // try to serve another request (file?)
     if(!handleFileRead(server.uri())) 
@@ -187,15 +161,6 @@ void loop() {
   ledstate=!ledstate;
   digitalWrite(PIN_LED,ledstate);
 
-  if(button_clicked) {
-    bg_mode ++;  // upon button click, change background mode
-    button_clicked = false;
-    pixelupdate=1;
-  }
-
-  update_background();
-  update_scrolltext();
-  update_icons ();
 
   if (pixelupdate) {
     pixelupdate=0;
@@ -228,99 +193,15 @@ void loop() {
 }
 
 
-/* ----------------
- *   Rainbow Effect
- * ---------------- */
-
-uint32_t getRGBColor(uint8_t r, uint8_t g, uint8_t b) {
-  return ((uint32_t)r << 16) | ((uint32_t)g <<  8) | b;
-}
-
 uint32_t wheel(int WheelPos) {
   WheelPos = 255 - WheelPos;
   if(WheelPos < 85) {
-    return adjust_brightness(getRGBColor(255 - WheelPos * 3, 0, WheelPos * 3),bg_brightness);  }
+    return adjust_brightness(getRGBColor(255 - WheelPos * 3, 0, WheelPos * 3),led_brightness);  }
   if(WheelPos < 170) {
     WheelPos -= 85;
-    return adjust_brightness(getRGBColor(0, WheelPos * 3, 255 - WheelPos * 3),bg_brightness);  }
+    return adjust_brightness(getRGBColor(0, WheelPos * 3, 255 - WheelPos * 3),led_brightness);  }
   WheelPos -= 170;
-  return adjust_brightness(getRGBColor(WheelPos * 3, 255 - WheelPos * 3, 0),bg_brightness);
-}
-
-void background_rainbow() {
-  static byte idx = 0;
-
-  if (!(counter%bg_wait)) { 
-    idx++; pixelupdate=1; 
-  }
-
-  for(int i=0;i<NUM_LEDS;i++) {
-    pixels[i] = wheel((i+idx)&0xFF);
-  }
-}
-
-
-void update_background()  {
-  switch(bg_mode) {
-    case BG_MODE_FILL:
-      for(int i=0;i<NUM_LEDS;i++) 
-        pixels[i]=adjust_brightness(bg_color,bg_brightness);
-      break;
-      
-    case BG_MODE_RAINBOW:
-        background_rainbow();
-      break;
-  
-    default: bg_mode=BG_MODE_FILL;
-      break;
-  }
-}   
-
-void blit_icon(byte icon, int pos) {
-  uint16_t i,p;
-  if (icon>=MAX_ICONS) return;
-  for(i=0;i<ICON_PIXELS;i++) {
-      p=pos*7+i; 
-      if ((p>=0) && (p<NUM_LEDS))  {
-        byte c=i/7, r=i%7;
-        if (pos%2) r=6-r;   // reverse every second column !
-        if (icons[icon][c*7+r])        
-           pixels[pos*7+i]=adjust_brightness(icons[icon][c*7+r],icon_brightness);
-      }
-  }
-}
-
-void update_icons() {
-  if (preview_acticon) {
-    blit_icon(act_icon+act_anim, icon_pos);
-    if (!(counter%anim_wait)) {
-      // icon_pos=(icon_pos+1)%(NUM_COLUMNS+20);
-      if (icons[act_icon][ICON_PIXELS]) act_anim++;
-      else act_anim=0; 
-    }
-    preview_acticon--;
-  }
-}
-
-
-/* ---------------------
- * Scroll Text and Icons
- * --------------------- */
- 
-void drawIcon(byte icon_num, int offset) {
-  byte anim_count;
-  anim_count=icons[icon_num][ICON_PIXELS]; 
-  if (anim_count) {
-    if (!(counter%anim_wait)) { 
-      anim_count++; 
-      if ((icon_num+anim_count>=MAX_ICONS) || (!(icons[icon_num+anim_count-1][ICON_PIXELS])))
-         anim_count=1;
-      icons[icon_num][ICON_PIXELS]=anim_count;
-      pixelupdate=1;
-    }
-    blit_icon(icon_num+anim_count-1,NUM_COLUMNS-ICON_OFFSET-offset);
-  }
-  else blit_icon(icon_num,NUM_COLUMNS-ICON_OFFSET-offset);
+  return adjust_brightness(getRGBColor(WheelPos * 3, 255 - WheelPos * 3, 0),led_brightness);
 }
 
 void drawFontCol(char c, int i){
@@ -355,22 +236,6 @@ void drawChar(char c, int offset){
   }
 }
 
-void update_scrolltext() {
-  static byte pos_in_char=0;
-  if (!scrolltext.length()) return;
-  if (!(counter%scrollwait)) {
-    pos_in_char=(pos_in_char+1)%6; 
-    if (!pos_in_char) scrollindex = (scrollindex+1)%scrolltext.length();
-    pixelupdate=1;
-  }
-
-  for(byte k = 0; k < (NUM_COLUMNS/5)+1; k++){
-      drawChar(scrolltext.charAt(scrollindex+k),pos_in_char - k*6);
-      drawFontCol(0,5-pos_in_char+k*6);
-  }
-}
-
-
 /* ----------------
  *  WebServer 
  * ---------------- */
@@ -388,23 +253,12 @@ void on_status() {
   String html = "";
   html += "{\"brightness\":";
   html += brightness; 
-  html += ",\"act_icon\":";
-  html += act_icon; 
-  html += ",\"bg_brightness\":";
-  html += bg_brightness; 
+  html += ",\"led_brightness\":";
+  html += led_brightness; 
   html += ",\"scroll_brightness\":";
   html += scroll_brightness; 
-  html += ",\"icon_brightness\":";
-  html += icon_brightness; 
   html += "}";
   server.send(200, "text/html", html);
-}
-
-uint16_t scale_wait(int16_t val) {
-  int16_t v=35-val;   // the max position of the speed slider is 30
-  if (v<3) v=3;
-  if (v>10) v=10+(v-10)*(v-10)*2;  // waittime progresses by ^2
-  return((uint16_t)v);
 }
 
 byte scale_brightness(byte val) {
@@ -420,10 +274,10 @@ void on_background() {
     bg_wait = scale_wait(server.arg("wait").toInt());
   }
   if(server.hasArg("color")) {
-    bg_color = strtol(server.arg("color").c_str(), NULL, 16);
+    led_color = strtol(server.arg("color").c_str(), NULL, 16);
   }
   if(server.hasArg("brightness")) {
-    bg_brightness = scale_brightness(server.arg("brightness").toInt());
+    led_brightness = scale_brightness(server.arg("brightness").toInt());
   }
   server.sendHeader("Access-Control-Allow-Origin", "*");
   server.send(200, "text/html", "{\"result\":1}");

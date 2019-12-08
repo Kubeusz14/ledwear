@@ -1,101 +1,138 @@
 import React, { Component } from "react";
 import "./main.scss";
 import Background from "../assets/images/shirt.png";
+import Form from "react-bootstrap/Form";
+import { Button } from "react-bootstrap";
+import { setValue } from "../services/data";
 
 let backgroundImage = {
-    backgroundImage: `url(${Background})`
+  backgroundImage: `url(${Background})`
 };
 
 const positions = [
   {
-    name: "Cuff: Left",
-    x: 0.23,
-    y: 0.8
-  },
-  {
-    name: "Sleeve: Left",
-    x: 0.25,
-    y: 0.5
-  },
-  {
-    name: "Armhole: Left",
-    x: 0.3,
-    y: 0.2
-  },
-  {
-    name: "Collar: Left",
-    x: 0.44,
-    y: 0.1
-  },
-  {
-    name: "Placket: Left",
-    x: 0.4,
-    y: 0.25
-  },
-  {
-    name: "Body: Higher Left",
-    x: 0.4,
-    y: 0.4
-  },
-  {
-    name: "Body: Lower Left",
-    x: 0.4,
-    y: 0.6
-  },
-  {
-    name: "Body: Lower Right",
-    x: 0.58,
-    y: 0.6
-  },
-  {
-    name: "Body: Higher Right",
-    x: 0.58,
-    y: 0.4
-  },
-  {
-    name: "Placket: Right",
-    x: 0.58,
-    y: 0.25
-  },
-  {
-    name: "Collar: Right",
-    x: 0.54,
-    y: 0.1
-  },
-  {
-    name: "Armhole: Right",
-    x: 0.68,
-    y: 0.2
+    name: "Cuff: Right",
+    x: 0.33,
+    y: 0.85,
+    value: "#009900"
   },
   {
     name: "Sleeve: Right",
-    x: 0.72,
-    y: 0.5
+    x: 0.35,
+    y: 0.5,
+    value: "#990099"
   },
   {
-    name: "Cuff: Right",
-    x: 0.75,
-    y: 0.8
+    name: "Armhole: Right",
+    x: 0.37,
+    y: 0.2,
+    value: "#909090"
+  },
+  {
+    name: "Collar: Right",
+    x: 0.46,
+    y: 0.1,
+    value: "#099999"
+  },
+  {
+    name: "Placket: Right",
+    x: 0.45,
+    y: 0.25,
+    value: "#999000"
+  },
+  {
+    name: "Body: Higher Right",
+    x: 0.45,
+    y: 0.4,
+    value: "#000999"
+  },
+  {
+    name: "Body: Lower Right",
+    x: 0.45,
+    y: 0.7,
+    value: "#900000"
+  },
+  {
+    name: "Body: Lower Left",
+    x: 0.54,
+    y: 0.7,
+    value: "#000099"
+  },
+  {
+    name: "Body: Higher Left",
+    x: 0.54,
+    y: 0.4,
+    value: "#990090"
+  },
+  {
+    name: "Placket: Left",
+    x: 0.54,
+    y: 0.25,
+    value: "#009900"
+  },
+  {
+    name: "Collar: Left",
+    x: 0.53,
+    y: 0.1,
+    value: "#090999"
+  },
+  {
+    name: "Armhole: Left",
+    x: 0.62,
+    y: 0.2,
+    value: "#990909"
+  },
+  {
+    name: "Sleeve: Left",
+    x: 0.64,
+    y: 0.5,
+    value: "#999990"
+  },
+  {
+    name: "Cuff: Left",
+    x: 0.66,
+    y: 0.85,
+    value: "#990009"
   }
 ];
 
+const inputs = document.querySelectorAll('input');
+const submitButton = document.getElementById('submit-button');
+const settingsButton = document.getElementById('settings-button');
 
-/*function init() {
-  const shirt = document.getElementById("shirt");
-  const colorPickers = positions.map(position => {
-    console.log(position);
-    const colorPicker = document.createElement("input");
-    colorPicker.type = "color";
-    // colorPicker.addEventListener('change', ...)
-    // ...
-    colorPicker.style.left = position.x * 100 + "%";
-    colorPicker.style.top = `${position.y * 100}%`;
-    colorPicker.name = `${position.description}`;
-    shirt.appendChild(colorPicker);
-    return colorPicker;
+
+export function saveValue(key,value) {
+    setValue(key, value);
+}
+
+function send(){
+    console.log('Start Send Call');
+    disableForm();
+
+    console.log('End Send Call');
+}
+
+function disableForm(){
+    submitButton.disabled = true;
+    settingsButton.disabled = true;
+    inputs.forEach(function(input) {
+        input.disabled = true;
+    });
+}
+
+function enableForm(){
+    submitButton.disabled = false;
+    settingsButton.disabled = false;
+    inputs.forEach(function(input) {
+        input.disabled = false;
+    });
+}
+
+function watchColorPicker(event) {
+  document.querySelectorAll("input").forEach(function(input) {
+    input.style.color = event.target.value;
   });
-  console.log("COLOR PICKERS:", colorPickers);
-}*/
+}
 
 class Main extends Component {
   constructor(props) {
@@ -106,15 +143,19 @@ class Main extends Component {
 
   init() {
     let shirt = document.getElementById("shirt");
+    saveValue('ledColor', inputs.value);
+    enableForm();
     let colorPickers = positions.map(position => {
       console.log(position);
       let colorPicker = document.createElement("input");
       colorPicker.type = "color";
-      // colorPicker.addEventListener('change', ...)
+      colorPicker.addEventListener("change", watchColorPicker, false);
       // ...
       colorPicker.style.left = position.x * 100 + "%";
       colorPicker.style.top = `${position.y * 100}%`;
-      colorPicker.name = `${position.description}`;
+      colorPicker.name = `${position.name}`;
+      colorPicker.title = `${position.name}`;
+      colorPicker.value = `${position.value}`;
       shirt.appendChild(colorPicker);
       return colorPicker;
     });
@@ -124,13 +165,17 @@ class Main extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="shirt__figure" id="shirt" style={ backgroundImage } ref={this.init} />
+        <Form>
+          <div id="shirt" style={backgroundImage} ref={this.init}></div>
+          <div className="submit__div container">
+            <Button className="submit__button" type="submit" id="submit-button" size="lg" block>
+              Send
+            </Button>
+          </div>
+        </Form>
       </React.Fragment>
-
     );
   }
 }
 
 export default Main;
-
-

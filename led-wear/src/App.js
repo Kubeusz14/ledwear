@@ -3,6 +3,7 @@ import Main from "./components/main";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { NavTab } from "react-router-tabs";
 import Settings from "./components/settings";
+import Footer from "./components/footer";
 import { Row, Col } from "react-bootstrap";
 import "./App.scss";
 
@@ -29,11 +30,12 @@ class App extends Component {
             <main>
               <Switch>
                 <Route path="/main" component={Main} />
-                <Route path="/animation" component={Main} />
+                <Route path="/" component={Main} />
               </Switch>
             </main>
           </div>
         </Router>
+        <Footer />
       </React.Fragment>
     );
   }
