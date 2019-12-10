@@ -10,7 +10,7 @@ function Settings() {
   return (
     <>
       <Button className="settingsButton" id="settings-button" variant="primary" onClick={handleShow}>
-        Settings
+        LED Settings
       </Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -22,10 +22,6 @@ function Settings() {
               <Form.Group controlId="formRange">
                   <Form.Label className="settingsLabel">LED Brightness</Form.Label>
                   <Form.Control type="range" />
-              </Form.Group>
-              <Form.Group controlId="formRange">
-                    <Form.Label className="settingsLabel">Blinking Speed</Form.Label>
-                    <Form.Control type="range"/>
               </Form.Group>
           </Form>
         </Modal.Body>

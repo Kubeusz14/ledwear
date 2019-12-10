@@ -9,20 +9,6 @@
   background-color: $primary-color;
 }
 
-.nav-tabs {
-  font-size: 1.4rem;
-}
-
-.nav-tab {
-  text-align: start;
-  color: white;
-  margin-right: 2rem;
-  margin-left: 2rem;
-  &:hover {
-    color: $hover-color;
-  }
-}
-
 .title {
   border-bottom: $border-color;
   text-align: center;
@@ -31,5 +17,6 @@
 
 .settings {
   border-bottom: $border-color;
-  text-align: end;
+  text-align: center;
+  font-size: xx-large;
 }

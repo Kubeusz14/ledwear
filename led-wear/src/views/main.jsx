@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./main.scss";
 import Background from "../assets/images/shirt.png";
 import Form from "react-bootstrap/Form";
+import Animations from "../components/animations";
 import { Button } from "react-bootstrap";
 import { setValue } from "../services/data";
 
@@ -142,6 +143,7 @@ class Main extends Component {
   }
 
   init() {
+    //enableForm();
     let shirt = document.getElementById("shirt");
     saveValue('ledColor', inputs.value);
     let colorPickers = positions.map(position => {
@@ -158,14 +160,19 @@ class Main extends Component {
       shirt.appendChild(colorPicker);
       return colorPicker;
     });
+    
     console.log("COLOR PICKERS:", colorPickers);
   }
 
   render() {
     return (
       <React.Fragment>
-        <Form>
+        <Form className="mainForm">
+
+          <Animations />
+
           <div id="shirt" style={backgroundImage} ref={this.init}></div>
+
           <div className="submit__div container">
             <Button className="submit__button" type="submit" id="submit-button" size="lg" block>
               Send

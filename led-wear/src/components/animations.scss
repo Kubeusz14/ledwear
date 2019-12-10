@@ -1,6 +1,10 @@
+@import "../assets/variables.scss";
+
 .animations {
-  height: 85vh;
-  margin-top: 2rem;
+  &__container {
+    text-align: center;
+    margin-left: 1.2rem;
+  }
   &__card {
     border: 1px solid white;
   }
@@ -8,4 +12,15 @@
 
 label {
   color: white;
+  margin-top: 1rem;
+}
+
+.form-check-input {
+  margin-top: 1.5rem;
+}
+
+.animation_btn {
+  background-color: white;
+  color: $primary-color;
+  border: $primary-color;
 }

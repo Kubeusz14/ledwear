@@ -31,6 +31,7 @@ export function sendRequest(key, handler) {
   };
 
   if (key === "led") {
-    xhr.open("GET", "http://192.168.4.1/", true);
+      //positions.reduce
+    xhr.open("GET", "http://192.168.4.1/led?pos1=000000&pos2=", true);
   }
 }
