@@ -14,7 +14,7 @@ export function sendPost(callback) {
         console.log("callback 1");
       } else {
         callback(0);
-        console.log("callbacl´k 0");
+        console.log("callback 0");
       }
     }
   }
@@ -28,10 +28,10 @@ export function sendRequest(key, handler) {
     if (xhr.readyState === 4) {
       handler(xhr);
     }
-  };
+  }
 
   if (key === "led") {
       //positions.reduce
-    xhr.open("GET", "http://192.168.4.1/led?pos1=000000&pos2=", true);
+    xhr.open("GET", "http://192.168.4.1/led?Cuff%3A+Right=" + getValue("") + "&Sleeve=", true);
   }
 }

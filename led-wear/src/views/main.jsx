@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import "./main.scss";
 import Background from "../assets/images/shirt.png";
 import Form from "react-bootstrap/Form";
+import Carousel from "react-bootstrap/Carousel";
 import Animations from "../components/animations";
 import { Button } from "react-bootstrap";
 import { setValue } from "../services/data";
+import { sendPost } from "../services/api_service";
 
 let backgroundImage = {
   backgroundImage: `url(${Background})`
@@ -97,36 +99,52 @@ const positions = [
   }
 ];
 
-const inputs = document.querySelectorAll('input');
-const submitButton = document.getElementById('submit-button');
-const settingsButton = document.getElementById('settings-button');
+const inputs = document.querySelectorAll("input");
+const submitButton = document.getElementById("submit-button");
+const settingsButton = document.getElementById("settings-button");
 
-
-export function saveValue(key,value) {
-    setValue(key, value);
+export function saveValue(key, value) {
+  setValue(key, value);
 }
 
-function send(){
-    console.log('Start Send Call');
-    disableForm();
-
-    console.log('End Send Call');
+function send() {
+  console.log("Start Send Call");
+  //disableForm();
+  sendPost(connectionStatus);
+  console.log("End Send Call");
 }
 
-function disableForm(){
-    submitButton.disabled = true;
-    settingsButton.disabled = true;
-    inputs.forEach(function(input) {
-        input.disabled = true;
-    });
+function connectionStatus(result) {
+  switch (result) {
+    case 1:
+      console.log("Connection successful!");
+      enableForm();
+      break;
+    case 2:
+      console.log("Connection Warning!");
+      enableForm();
+      break;
+    case 0:
+      console.log("Connection failed!");
+      enableForm();
+      break;
+  }
 }
 
-function enableForm(){
-    submitButton.disabled = false;
-    settingsButton.disabled = false;
-    inputs.forEach(function(input) {
-        input.disabled = false;
-    });
+function disableForm() {
+  submitButton.disabled = true;
+  settingsButton.disabled = true;
+  inputs.forEach(function(input) {
+    input.disabled = true;
+  });
+}
+
+function enableForm() {
+  submitButton.disabled = false;
+  settingsButton.disabled = false;
+  inputs.forEach(function(input) {
+    input.disabled = false;
+  });
 }
 
 function watchColorPicker(event) {
@@ -145,13 +163,17 @@ class Main extends Component {
   init() {
     //enableForm();
     let shirt = document.getElementById("shirt");
-    saveValue('ledColor', inputs.value);
+    let form = document.getElementById("main-form");
+    saveValue("ledColor", inputs.value);
     let colorPickers = positions.map(position => {
       console.log(position);
       let colorPicker = document.createElement("input");
       colorPicker.type = "color";
       colorPicker.addEventListener("change", watchColorPicker, false);
-      // ...
+      colorPicker.addEventListener("input", function() {
+        saveValue("ledColor", inputs.value);
+      });
+      form.addEventListener("submit", send);
       colorPicker.style.left = position.x * 100 + "%";
       colorPicker.style.top = `${position.y * 100}%`;
       colorPicker.name = `${position.name}`;
@@ -160,21 +182,58 @@ class Main extends Component {
       shirt.appendChild(colorPicker);
       return colorPicker;
     });
-    
+
     console.log("COLOR PICKERS:", colorPickers);
   }
 
   render() {
     return (
       <React.Fragment>
-        <Form className="mainForm">
-
+        <Form className="mainForm" id="main-form">
           <Animations />
 
-          <div id="shirt" style={backgroundImage} ref={this.init}></div>
-
+          <Carousel>
+            <Carousel.Item>
+              <div
+                className="shirt"
+                id="shirt"
+                style={backgroundImage}
+                ref={this.init}
+              ></div>
+            </Carousel.Item>
+            <Carousel.Item>
+              <div
+                className="shirt"
+                id="shirt"
+                style={backgroundImage}
+                ref={this.init}
+              ></div>
+            </Carousel.Item>
+            <Carousel.Item>
+              <div
+                className="shirt"
+                id="shirt"
+                style={backgroundImage}
+                ref={this.init}
+              ></div>
+            </Carousel.Item>
+            <Carousel.Item>
+              <div
+                className="shirt"
+                id="shirt"
+                style={backgroundImage}
+                ref={this.init}
+              ></div>
+            </Carousel.Item>
+          </Carousel>
           <div className="submit__div container">
-            <Button className="submit__button" type="submit" id="submit-button" size="lg" block>
+            <Button
+              className="submit__button"
+              type="submit"
+              id="submit-button"
+              size="lg"
+              block
+            >
               Send
             </Button>
           </div>
