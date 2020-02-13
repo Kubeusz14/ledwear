@@ -156,90 +156,103 @@ function watchColorPicker(event) {
 class Main extends Component {
   constructor(props) {
     super(props);
-    this.shirt = React.createRef();
+
+
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.init = this.init.bind(this);
+    this.init();
   }
 
   init() {
     //enableForm();
-    let shirt = document.getElementById("shirt");
-    let form = document.getElementById("main-form");
-    saveValue("ledColor", inputs.value);
-    let colorPickers = positions.map(position => {
-      console.log(position);
-      let colorPicker = document.createElement("input");
-      colorPicker.type = "color";
-      colorPicker.addEventListener("change", watchColorPicker, false);
-      colorPicker.addEventListener("input", function() {
-        saveValue("ledColor", inputs.value);
-      });
-      form.addEventListener("submit", send);
-      colorPicker.style.left = position.x * 100 + "%";
-      colorPicker.style.top = `${position.y * 100}%`;
-      colorPicker.name = `${position.name}`;
-      colorPicker.title = `${position.name}`;
-      colorPicker.value = `${position.value}`;
-      shirt.appendChild(colorPicker);
-      return colorPicker;
-    });
+  }
 
-    console.log("COLOR PICKERS:", colorPickers);
+  handleSubmit(event) {
+    event.preventDefault();
+    const data = new FormData(event.target);
+
+    fetch( /*address*/'', {
+      method: 'POST',
+      body: data
+    } ).then( response  => {console.log(response.data)} )
   }
 
   render() {
     return (
-      <React.Fragment>
-        <Form className="mainForm" id="main-form">
-          <Animations />
+        <React.Fragment>
+          <Form className="mainForm" id="main-form" onSubmit={this.handleSubmit}>
+            <Animations />
 
-          <Carousel>
-            <Carousel.Item>
-              <div
-                className="shirt"
-                id="shirt"
-                style={backgroundImage}
-                ref={this.init}
-              ></div>
-            </Carousel.Item>
-            <Carousel.Item>
-              <div
-                className="shirt"
-                id="shirt"
-                style={backgroundImage}
-                ref={this.init}
-              ></div>
-            </Carousel.Item>
-            <Carousel.Item>
-              <div
-                className="shirt"
-                id="shirt"
-                style={backgroundImage}
-                ref={this.init}
-              ></div>
-            </Carousel.Item>
-            <Carousel.Item>
-              <div
-                className="shirt"
-                id="shirt"
-                style={backgroundImage}
-                ref={this.init}
-              ></div>
-            </Carousel.Item>
-          </Carousel>
-          <div className="submit__div container">
-            <Button
-              className="submit__button"
-              type="submit"
-              id="submit-button"
-              size="lg"
-              block
-            >
-              Send
-            </Button>
-          </div>
-        </Form>
-      </React.Fragment>
+            <Carousel interval={null}>
+              <Carousel.Item><Shirt key="shirt_1" id="shirt_1" /></Carousel.Item>
+              <Carousel.Item><Shirt key="shirt_2" id="shirt_2" /></Carousel.Item>
+              <Carousel.Item><Shirt key="shirt_3" id="shirt_3" /></Carousel.Item>
+              <Carousel.Item><Shirt key="shirt_4" id="shirt_4" /></Carousel.Item>
+            </Carousel>
+            <div className="submit__div container">
+              <Button
+                  className="submit__button"
+                  type="submit"
+                  id="submit-button"
+                  size="lg"
+                  block
+              >
+                Send
+              </Button>
+            </div>
+          </Form>
+        </React.Fragment>
     );
+  }
+}
+
+class Shirt extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.colorPickers = [];
+
+    for( let position in positions ) {
+      let colorpicker_id = this.props.id + "_" + position;
+      this.colorPickers.push( <ColorInput
+          className="led-button"
+          title={positions[position].name}
+          style={{
+            top: (positions[position].y * 100) + "%",
+            left: (positions[position].x * 100) + "%"
+          }}
+          defaultValue={positions[position].value}
+          id={colorpicker_id}
+          key={colorpicker_id}
+      ></ColorInput> );
+    }
+  }
+
+  render() {
+    return (
+        <div
+            className="shirt"
+            id={this.props.id}
+            style={backgroundImage}
+            ref={this.shirt}
+        >
+          {this.colorPickers}
+        </div> );
+  }
+}
+
+class ColorInput extends React.Component {
+  render() {
+    return <Form.Control
+        type="color"
+        className={this.props.className}
+        title={this.props.title}
+        style={this.props.style}
+        defaultValue={this.props.defaultValue}
+        id={this.props.id}
+        onChange={watchColorPicker}
+        onInput={saveValue("ledColor", this.value)}
+    />;
   }
 }
 

@@ -1,13 +1,22 @@
 @import "../assets/variables.scss";
 
-#shirt {
-  height: 80vh;
+.shirt {
+  height: 0;
+  padding: 20.4% 0;
+  width: 41.25vw;
+  margin: 0 auto;
   position: relative;
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
   & input {
     position: absolute;
+
+    &.led-button {
+      width: 2.3vw;
+      height: 2.3vw;
+      padding: 0px;
+    }
   }
 }
 
