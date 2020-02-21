@@ -29,6 +29,9 @@ example-app is your app name
 
 6. Control the LED-Wear
 
+![LED Wear Interface](/images/interface.PNG)
+Format: ![Alt Text](url)
+
 ## Run the Web App
 
 In the project directory, you can run:
