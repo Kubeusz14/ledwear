@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import "./main.scss";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import Background from "../assets/images/shirt.png";
 import Form from "react-bootstrap/Form";
-import Carousel from "react-bootstrap/Carousel";
 import Animations from "../components/animations";
 import { Button } from "react-bootstrap";
-import { setValue } from "../services/data";
-import { sendPost } from "../services/api_service";
+import Slider from "react-slick";
 
 let backgroundImage = {
   backgroundImage: `url(${Background})`
@@ -15,166 +15,153 @@ let backgroundImage = {
 const positions = [
   {
     name: "Cuff: Right",
-    x: 0.36,
-    y: 0.85,
+    left: 0.15,
+    top: 0.85,
     value: "#009900"
   },
   {
     name: "Sleeve: Right",
-    x: 0.37,
-    y: 0.5,
+    left: 0.18,
+    top: 0.5,
     value: "#990099"
   },
   {
     name: "Armhole: Right",
-    x: 0.4,
-    y: 0.2,
+    left: 0.25,
+    top: 0.2,
     value: "#909090"
   },
   {
     name: "Collar: Right",
-    x: 0.47,
-    y: 0.1,
+    left: 0.41,
+    top: 0.08,
     value: "#099999"
   },
   {
     name: "Placket: Right",
-    x: 0.45,
-    y: 0.25,
+    left: 0.37,
+    top: 0.25,
     value: "#999000"
   },
   {
-    name: "Body: Higher Right",
-    x: 0.45,
-    y: 0.4,
+    name: "Bodtop: Higher Right",
+    left: 0.39,
+    top: 0.4,
     value: "#000999"
   },
   {
-    name: "Body: Lower Right",
-    x: 0.45,
-    y: 0.7,
+    name: "Bodtop: Lower Right",
+    left: 0.38,
+    top: 0.7,
     value: "#900000"
   },
   {
-    name: "Body: Lower Left",
-    x: 0.54,
-    y: 0.7,
+    name: "Bodtop: Lower Left",
+    right: 0.38,
+    top: 0.7,
     value: "#000099"
   },
   {
-    name: "Body: Higher Left",
-    x: 0.54,
-    y: 0.4,
+    name: "Bodtop: Higher Left",
+    right: 0.39,
+    top: 0.4,
     value: "#990090"
   },
   {
     name: "Placket: Left",
-    x: 0.54,
-    y: 0.25,
+    right: 0.37,
+    top: 0.25,
     value: "#009900"
   },
   {
     name: "Collar: Left",
-    x: 0.52,
-    y: 0.1,
+    right: 0.41,
+    top: 0.08,
     value: "#090999"
   },
   {
     name: "Armhole: Left",
-    x: 0.59,
-    y: 0.2,
+    right: 0.25,
+    top: 0.2,
     value: "#990909"
   },
   {
     name: "Sleeve: Left",
-    x: 0.62,
-    y: 0.5,
+    right: 0.18,
+    top: 0.5,
     value: "#999990"
   },
   {
     name: "Cuff: Left",
-    x: 0.628,
-    y: 0.85,
+    right: 0.15,
+    top: 0.85,
     value: "#990009"
   }
 ];
 
-const inputs = document.querySelectorAll("input");
-const submitButton = document.getElementById("submit-button");
-const settingsButton = document.getElementById("settings-button");
-
-export function saveValue(key, value) {
-  setValue(key, value);
-}
-
-function send() {
-  console.log("Start Send Call");
-  //disableForm();
-  sendPost(connectionStatus);
-  console.log("End Send Call");
-}
-
-function connectionStatus(result) {
-  switch (result) {
-    case 1:
-      console.log("Connection successful!");
-      enableForm();
-      break;
-    case 2:
-      console.log("Connection Warning!");
-      enableForm();
-      break;
-    case 0:
-      console.log("Connection failed!");
-      enableForm();
-      break;
-  }
-}
-
-function disableForm() {
-  submitButton.disabled = true;
-  settingsButton.disabled = true;
-  inputs.forEach(function(input) {
-    input.disabled = true;
-  });
-}
-
-function enableForm() {
-  submitButton.disabled = false;
-  settingsButton.disabled = false;
-  inputs.forEach(function(input) {
-    input.disabled = false;
-  });
+function saveValue(key, value) {
+  // setValue(key, value);
 }
 
 function watchColorPicker(event) {
-  document.querySelectorAll("input").forEach(function(input) {
-    input.style.color = event.target.value;
-  });
+  if( document.getElementById('checkSameColor').checked ) {
+    let shirt_index = event.target.id.split('_')[1];
+    let shirtInputs = document.getElementById('shirt_'+shirt_index).querySelectorAll('input');
+    for(let shirtInput of shirtInputs) {
+      console.log(shirtInput);
+      shirtInput.value = event.target.value;
+    }
+  }
+  console.log(event.target);
 }
 
 class Main extends Component {
   constructor(props) {
     super(props);
-
-
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.init = this.init.bind(this);
-    this.init();
-  }
-
-  init() {
-    //enableForm();
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    const data = new FormData(event.target);
+    let ledColorString = '';
+    let inputs = document.getElementById("main-form").querySelectorAll('input[type=color]');
 
-    fetch( /*address*/'', {
-      method: 'POST',
-      body: data
-    } ).then( response  => {console.log(response.data)} )
+    for(let input of inputs) {
+      let currentLedString = input.value.substring(1);
+      console.log(input.id);
+      ledColorString += currentLedString;
+    }
+
+    if( ledColorString.length < 85 ) {
+      for( let i = 0; i < 2; i++ ) {
+        ledColorString += ledColorString;
+      }
+    }
+
+    let blinkingSpeed = document.getElementById('inputSpeed').value;
+
+    let brigthness = document.getElementById('formBrightnessRange').value;
+
+    const data = new FormData(event.target);
+    const xhr1 = new XMLHttpRequest();
+    const xhr2 = new XMLHttpRequest();
+    const xhr3 = new XMLHttpRequest();
+
+    let mainCommand = 'http://192.168.4.1/cc?';
+
+    let command = '';
+
+    command = mainCommand+'pixels='+ledColorString;
+    xhr1.open( 'GET', command, true);
+    xhr1.send();
+
+    command = mainCommand+'speed='+blinkingSpeed;
+    xhr2.open( 'GET', command, true);
+    xhr2.send();
+
+    command = mainCommand+'brightness='+brigthness;
+    xhr3.open( 'GET', command, true);
+    xhr3.send();
   }
 
   render() {
@@ -182,13 +169,7 @@ class Main extends Component {
         <React.Fragment>
           <Form className="mainForm" id="main-form" onSubmit={this.handleSubmit}>
             <Animations />
-
-            <Carousel interval={null}>
-              <Carousel.Item><Shirt key="shirt_1" id="shirt_1" /></Carousel.Item>
-              <Carousel.Item><Shirt key="shirt_2" id="shirt_2" /></Carousel.Item>
-              <Carousel.Item><Shirt key="shirt_3" id="shirt_3" /></Carousel.Item>
-              <Carousel.Item><Shirt key="shirt_4" id="shirt_4" /></Carousel.Item>
-            </Carousel>
+            <SimpleSlider />
             <div className="submit__div container">
               <Button
                   className="submit__button"
@@ -211,20 +192,20 @@ class Shirt extends React.Component {
     super(props);
 
     this.colorPickers = [];
-
     for( let position in positions ) {
       let colorpicker_id = this.props.id + "_" + position;
       this.colorPickers.push( <ColorInput
           className="led-button"
           title={positions[position].name}
           style={{
-            top: (positions[position].y * 100) + "%",
-            left: (positions[position].x * 100) + "%"
+            top: (positions[position].top * 100) + "%",
+            left: typeof positions[position].left !== "undefined" ? ((positions[position].left * 100) + '%') : '',
+            right: typeof positions[position].right !== "undefined" ? ((positions[position].right * 100) + '%') : ''      
           }}
           defaultValue={positions[position].value}
           id={colorpicker_id}
           key={colorpicker_id}
-      ></ColorInput> );
+      /> );
     }
   }
 
@@ -251,8 +232,60 @@ class ColorInput extends React.Component {
         defaultValue={this.props.defaultValue}
         id={this.props.id}
         onChange={watchColorPicker}
-        onInput={saveValue("ledColor", this.value)}
+        key={this.props.id}
+        onInput={saveValue(this.props.id, this.value)}
     />;
+  }
+}
+
+class SimpleSlider extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      slides: [0]
+    };
+    this.animatedSlide = this.animatedSlide.bind( this );
+    this.staticSlide   = this.staticSlide.bind( this );
+  }
+
+  animatedSlide() {
+    const { slides } = this.state;
+    this.setState({
+      slides: [0, 1, 2, 3]/*slides.concat(slides.length+1)*/
+    });
+  }
+  staticSlide() {
+    const { slides } = this.state;
+    this.setState({
+      slides: [0]/*(function(){slides.pop(); return slides;})()*/
+    });
+  }
+
+  render() {
+    let settings = {
+      dots: true,
+      infinite: false,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1
+    };
+    return (
+        <div className="sliderButtons">
+          <Button className="button" onClick={this.animatedSlide}>
+              Animated Shirt
+          </Button>
+          <Button className="button" onClick={this.staticSlide}>
+              Static Shirt
+          </Button>
+          <Slider {...settings}>
+            {this.state.slides.map(function(slide){
+              return (
+                  <Shirt key={"shirt_" + slide} id={"shirt_" + slide} />
+              )
+            })}
+          </Slider>
+        </div>
+    );
   }
 }
 

@@ -18,12 +18,6 @@ function Settings() {
         </Modal.Header>
 
         <Modal.Body>
-          <Form>
-              <Form.Group controlId="formRange">
-                  <Form.Label className="settingsLabel">LED Brightness</Form.Label>
-                  <Form.Control type="range" />
-              </Form.Group>
-          </Form>
         </Modal.Body>
 
         <Modal.Footer>

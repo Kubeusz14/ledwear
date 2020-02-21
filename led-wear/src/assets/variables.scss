@@ -5,3 +5,16 @@ $radial-color2: #0677a1;
 $radial-color3: #2d4159;
 $border-color: 1px solid #dee2e6;
 $hover-color: #bebaff;
+
+// MIXINS:
+@mixin for-phone-only {
+    @media (max-width: 599px) { @content; }
+}@mixin for-tablet-portrait-up {
+    @media (min-width: 600px) { @content; }
+}@mixin for-tablet-landscape-up {
+    @media (min-width: 900px) { @content; }
+}@mixin for-desktop-up {
+    @media (min-width: 1200px) { @content; }
+}@mixin for-big-desktop-up {
+    @media (min-width: 1800px) { @content; }
+}

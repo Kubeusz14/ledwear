@@ -9,13 +9,25 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
+
+  @include for-phone-only {
+    width: 100%;
+    background-size: 100%;
+    padding-bottom: 74%;
+  }
+
   & input {
     position: absolute;
 
     &.led-button {
       width: 2.3vw;
       height: 2.3vw;
-      padding: 0px;
+      padding: 0;
+
+      @include for-phone-only {
+        width: 5vw;
+        height: 5vw;
+      }
     }
   }
 }

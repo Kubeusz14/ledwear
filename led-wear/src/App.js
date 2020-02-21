@@ -14,9 +14,6 @@ class App extends Component {
                 <Col className="header title">
                   <h1>LED Wear</h1>
                 </Col>
-                <Col className="header settings">
-                  <Settings />
-                </Col>
               </Row>
             </header>
             <main>
