@@ -1,9 +1,35 @@
-# ledwear
+# LED-Wear
 FH Technikum Wien Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The LED-Wear is a shirt, that has LEDs and an Arduino built-in. With this project you can create an Web-Application that is able to change the Seetings of the LEDs connected to the Arduino. There you can change the color of each individual LED as well as its brightness and add some animations like blinking and change its speed. 
 
-## Available Scripts
+This repo is seperated into the arduino part and the Web App part. The LedWear.ino File can be flashed on to the microcontroller. When finished the ESP opens u a WiFi Hotspot that can be connected to, for the purpose of controlling the microcontroller wirelessly. 
+The src folder contains the code for the Web App.
+
+## Hardware
+
+The used Hardware:
+ESP8266 AI ThinkerBoard mit NodeMCU 0.9 (ESP-12 Module)
+WS2812B RGB LEDs
+
+## Steps
+
+1. First create a react App - npx create-react-app example-app
+example-app is your app name
+
+2. Copy files from this repo and replace
+
+<--npm install --save> to install save all dependencies
+
+3. Flash the Arduino Files onto the Arduino Board with Arduino IDE
+
+4. Run 'npm run build' - Upload Sketch Data
+
+5. Connect to Hotspot
+
+6. Control the LED-Wear
+
+## Run the Web App
 
 In the project directory, you can run:
 
@@ -15,11 +41,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
 ### `npm run build`
 
 Builds the app for production to the `build` folder.<br />
@@ -29,43 +50,3 @@ The build is minified and the filenames include the hashes.<br />
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
