@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Main from "./views/main";
-import Settings from "./components/settings";
 import Footer from "./components/footer";
 import { Row, Col } from "react-bootstrap";
 import "./App.scss";
