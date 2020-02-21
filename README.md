@@ -14,12 +14,12 @@ WS2812B RGB LEDs
 
 ## Steps
 
-1. First create a react App - npx create-react-app example-app
+1. First create a react App - `npx create-react-app example-app`
 example-app is your app name
 
 2. Copy files from this repo and replace
 
-<--npm install --save> to install save all dependencies
+`--npm install --save` to install save all dependencies
 
 3. Flash the Arduino Files onto the Arduino Board with Arduino IDE
 
@@ -29,8 +29,7 @@ example-app is your app name
 
 6. Control the LED-Wear
 
-![LED Wear Interface](/images/interface.PNG)
-Format: ![Alt Text](url)
+![LED WEAR Interface](interface.PNG)
 
 ## Run the Web App
 
